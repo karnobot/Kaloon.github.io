@@ -3,74 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Integration</title>
-    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <title>Chatbot Website</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
         }
-        /* Custom styles for the welcome message to ensure it's centered and styled well */
-        .welcome-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-        }
-        .main-heading {
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #333;
-        }
-        .sub-heading {
-            font-size: 1.25rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-        
     </style>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
-    <!--
-        This is the main content of your webpage.
-        The Botpress chatbot will appear as an overlay on top of this content.
-        We've created a simple, centered welcome message.
-    -->
-    <div class="welcome-container bg-gray-100">
-        <h1 class="main-heading">Hello! We've integrated your new chatbot.</h1>
-        <p class="sub-heading">Look for the chat widget in the bottom right corner of the screen to start chatting with your bot.</p>
-    </div>
+    <main class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Hello!</h1>
+        <p class="text-lg md:text-xl text-gray-600">We've integrated your new chatbot.</p>
+        <p class="text-lg md:text-xl text-gray-600 mt-2">Look for the chat widget in the bottom right corner of the screen to start chatting with your bot.</p>
+    </main>
 
-    <!--
-        This is the embed code provided by Botpress.
-        The <script> tag loads the Botpress webchat and initializes it with your specific configuration.
-        It's best practice to place this script just before the closing </body> tag.
-        The link you provided is a "shareable" link. We've extracted the core configuration URL
-        to properly embed it here, as a shareable link isn't meant for embedding directly.
-    -->
+    <!-- Botpress Chatbot Integration -->
     <script>
-        window.botpressWebChat.init({
-            "composerPlaceholder": "Chat with the bot",
-            "botConversationDescription": "This chatbot is powered by Botpress",
-            "botId": "713803ac-57c4-406c-9418-7b99214a1c6e",
-            "hostUrl": "https://cdn.botpress.cloud/webchat/v3.2",
-            "messagingUrl": "https://messaging.botpress.cloud",
-            "clientId": "713803ac-57c4-406c-9418-7b99214a1c6e",
-            "webhookId": "651e44f3-ed1e-450f-a492-c16e7807c4fd",
-            "locale": "en",
-            "containerWidth": "100%",
-            "layoutWidth": "100%",
-            "disableAnimations": true,
-            "theme": "prism",
-            "themeColor": "#000000"
+        // Use a DOMContentLoaded listener to ensure the page is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if the Botpress Webchat script and its initialization are available
+            if (window.botpressWebChat) {
+                // The Botpress script has loaded and is ready to be initialized
+                window.botpressWebChat.init({
+                    "composerPlaceholder": "Chat with Botpress",
+                    "botConversationDescription": "This is your awesome chatbot!",
+                    "botId": "YOUR_BOT_ID",
+                    "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
+                    "messagingUrl": "https://messaging.botpress.cloud",
+                    "clientId": "YOUR_CLIENT_ID",
+                    "stylesheet": "https://webchat-styler-css.botpress.app/prod/code/bb6b2e12-422f-4131-a204-c3c2f06790e7/v41569/style.css",
+                    "themeName": "prism",
+                    "containerWidth": "100%",
+                    "layoutWidth": "100%"
+                });
+            } else {
+                console.error("Botpress Webchat is not available. Please check the script tags.");
+            }
         });
     </script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
 
 </body>
 </html>
