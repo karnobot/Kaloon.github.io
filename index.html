@@ -50,127 +50,7 @@
             color: #6b7280;
             line-height: 1.6;
         }
-
-        #poem-output {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            min-height: 5rem;
-            white-space: pre-wrap; /* Preserve line breaks */
-            text-align: left;
-            font-style: italic;
-        }
     </style>
-     <!-- JavaScript for the Gemini API features -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const generateGreetingBtn = document.getElementById('generateGreetingBtn');
-            const describeAppBtn = document.getElementById('describeAppBtn');
-            const generatePoemBtn = document.getElementById('generatePoemBtn');
-            const poemTopicInput = document.getElementById('poemTopicInput');
-            const poemOutput = document.getElementById('poem-output');
-            const greetingTitle = document.getElementById('greeting-title');
-            const statusMessage = document.getElementById('statusMessage');
-
-            // API configuration
-            const apiKey = "";
-            const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent';
-            const model = 'gemini-2.5-flash-preview-05-20';
-            
-            // Exponential backoff retry function
-            const fetchWithRetry = async (url, options, retries = 3) => {
-                for (let i = 0; i < retries; i++) {
-                    try {
-                        const response = await fetch(url, options);
-                        if (response.status === 429 && i < retries - 1) { // 429 Too Many Requests
-                            const delay = Math.pow(2, i) * 1000;
-                            console.log(`Retrying after ${delay}ms...`);
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            continue;
-                        }
-                        return response;
-                    } catch (error) {
-                        if (i < retries - 1) {
-                            const delay = Math.pow(2, i) * 1000;
-                            console.log(`Fetch failed, retrying after ${delay}ms...`);
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            continue;
-                        }
-                        throw error;
-                    }
-                }
-                throw new Error('All retries failed.');
-            };
-
-            // Function to generate content with Gemini API
-            const generateContent = async (prompt) => {
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                };
-
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                };
-
-                try {
-                    statusMessage.textContent = 'Generating...';
-                    const response = await fetchWithRetry(`${apiUrl}?key=${apiKey}`, options);
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        return result.candidates[0].content.parts[0].text;
-                    } else {
-                        console.error('Unexpected API response structure:', result);
-                        return 'Could not generate content. Please try again.';
-                    }
-                } catch (error) {
-                    console.error('Error calling Gemini API:', error);
-                    return 'Error: Could not connect to the API.';
-                } finally {
-                    statusMessage.textContent = '';
-                }
-            };
-
-            // Event listener for the "Generate New Greeting" button
-            generateGreetingBtn.addEventListener('click', async () => {
-                const prompt = "Generate a short, friendly, and unique welcome greeting for a website. Make it casual and inviting, but no more than 10 words.";
-                const newGreeting = await generateContent(prompt);
-                greetingTitle.textContent = newGreeting;
-            });
-
-            // Event listener for the "Describe the App" button
-            describeAppBtn.addEventListener('click', async () => {
-                // Get the text content of the main card
-                const appContent = document.querySelector('.card').textContent.trim();
-                const prompt = `Based on the following text from a web page, provide a one-sentence, concise description of the application. The text is: "${appContent}"`;
-                const newDescription = await generateContent(prompt);
-                
-                // Use a non-disruptive way to show the description
-                // We'll use the status message area for this
-                statusMessage.textContent = newDescription;
-            });
-
-            // Event listener for the "Generate Poem" button
-            generatePoemBtn.addEventListener('click', async () => {
-                const topic = poemTopicInput.value;
-                if (!topic) {
-                    poemOutput.textContent = "Please enter a topic to generate a poem.";
-                    return;
-                }
-                const prompt = `Write a short, funny poem about: ${topic}. Make sure it rhymes.`;
-                const newPoem = await generateContent(prompt);
-                poemOutput.textContent = newPoem;
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -185,34 +65,10 @@
             </p>
             <!-- A div to help the bot render. Some integrations need a specific container. -->
             <div id="botpress-webchat-container"></div>
-
-            <!-- Gemini API powered features -->
-            <div class="mt-8 flex flex-col items-center space-y-4">
-                <button id="generateGreetingBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
-                    ✨ Generate New Greeting
-                </button>
-                <button id="describeAppBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
-                    ✨ Describe the App
-                </button>
-                
-                <!-- New feature: Poem Generator -->
-                <div class="w-full mt-4">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">✨ Generate a Funny Poem</h2>
-                    <input type="text" id="poemTopicInput" class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter a topic for your poem (e.g., 'a sleepy cat')">
-                    <button id="generatePoemBtn" class="mt-2 w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
-                        Generate Poem
-                    </button>
-                    <div id="poem-output" class="text-gray-700"></div>
-                </div>
-
-                <div id="statusMessage" class="text-sm text-gray-500 mt-2"></div>
-            </div>
-
         </div>
     </div>
 
     <!-- Your Botpress embed code goes here -->
-    <!-- This is the code you provided, which is correctly configured with the "defer" attribute. -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js" defer></script>
     <script src="https://files.bpcontent.cloud/2025/08/16/21/20250816210430-WLO4URI9.js" defer></script>
 
