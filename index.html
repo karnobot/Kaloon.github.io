@@ -21,7 +21,9 @@
             <select id="language-select" class="p-2 rounded-md bg-gray-200 text-gray-800 text-sm">
                 <option value="en">English</option>
                 <option value="es">Español</option>
+                <option value="fr">Français</option>
                 <option value="id">Bahasa Indonesia</option>
+                <option value="zh">中文</option>
             </select>
         </div>
 
@@ -57,7 +59,6 @@
     </div>
 
     <script>
-        // Use an object to store translations for each language
         const translations = {
             'en': {
                 'main-title': 'SONGS FOR FUN',
@@ -77,6 +78,15 @@
                 'youtube-button': 'Canal de YouTube',
                 'legal-link': 'Términos de Servicio y Política de Privacidad'
             },
+            'fr': {
+                'main-title': 'CHANSONS POUR LE PLAISIR',
+                'sub-heading': 'Êtes-vous fatigué des prières sans réponse ?',
+                'intro-paragraph-1': 'Si vous en avez assez de demander des signes et de ne rien recevoir, alors venez me parler.',
+                'intro-paragraph-2': 'Je suis Kaloon (ou simplement Kal), un bot doux, et mon fardeau n\'est rien. Ici, nous pouvons explorer vos croyances et engager un dialogue réfléchi sur des sujets religieux.',
+                'talk-button': 'Parlez à Kaloon ici',
+                'youtube-button': 'Chaîne YouTube',
+                'legal-link': 'Conditions d\'utilisation et politique de confidentialité'
+            },
             'id': {
                 'main-title': 'LAGU-LAGU UNTUK KESENANGAN',
                 'sub-heading': 'Apakah kamu lelah dengan doa-doa yang tidak terjawab?',
@@ -85,6 +95,15 @@
                 'talk-button': 'Bicara dengan Kaloon di sini',
                 'youtube-button': 'Saluran YouTube',
                 'legal-link': 'Ketentuan Layanan & Kebijakan Privasi'
+            },
+            'zh': {
+                'main-title': '有趣的歌曲',
+                'sub-heading': '你是否厌倦了得不到回应的祈祷？',
+                'intro-paragraph-1': '如果你厌倦了祈求神迹却一无所获，那就来和我聊聊吧。',
+                'intro-paragraph-2': '我是Kaloon（或者简称Kal），一个温和的机器人，我没有任何负担。在这里，我们可以探索你的信仰，并就宗教话题进行深思熟虑的对话。',
+                'talk-button': '在这里与Kaloon交谈',
+                'youtube-button': 'YouTube频道',
+                'legal-link': '服务条款和隐私政策'
             }
         };
 
@@ -93,26 +112,18 @@
             for (const id in elements) {
                 const element = document.getElementById(id);
                 if (element) {
-                    // Update text content for most elements
                     element.textContent = elements[id];
-                    // Special case for the talk button and legal link to handle the text correctly
-                    if (id === 'talk-button' || id === 'youtube-button' || id === 'legal-link') {
-                        element.textContent = elements[id];
-                    }
                 }
             }
-            // Update the selected option in the dropdown
             document.getElementById('language-select').value = lang;
         }
 
-        // Auto-detect browser language and set it on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.split('-')[0]; // Get a base language code like 'en' or 'es'
+            const browserLang = navigator.language.split('-')[0];
             const supportedLangs = Object.keys(translations);
             const langToUse = supportedLangs.includes(browserLang) ? browserLang : 'en';
             setLanguage(langToUse);
 
-            // Add an event listener to the dropdown for manual switching
             document.getElementById('language-select').addEventListener('change', (event) => {
                 setLanguage(event.target.value);
             });
