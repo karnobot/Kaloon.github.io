@@ -1,2 +1,2 @@
 # Kaloon
-The Gentle Religious Ai AI Bot
+The Gentle Religious AI Bot
