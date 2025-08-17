@@ -67,17 +67,34 @@
             line-height: 1.6;
         }
 
+        /*
+        * This is the user's provided CSS to make the chatbot a full embed.
+        * We are adding `height: 100% !important;` to ensure the container
+        * has a definite height for the bot to render into.
+        */
+        #webchat .bpWebchat {
+            position: unset !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            max-width: 100% !important;
+        }
+
+        #webchat .bpFab {
+            display: none !important;
+        }
+
+        /* Ensure the container for the bot has a definite height */
+        #webchat-container {
+            height: 100%;
+            width: 100%;
+        }
+
         /* Responsive adjustments for smaller screens */
         @media (max-width: 768px) {
             .chatbot-card {
                 height: 90vh; /* Make the chatbot taller on mobile */
             }
-        }
-
-        /* This is a simple container to make sure the chatbot fills the space. */
-        #botpress-webchat-container {
-            width: 100%;
-            height: 100%;
         }
     </style>
 </head>
@@ -98,30 +115,40 @@
             </div>
             <!--
             * This is the div where the Botpress chatbot will be injected.
-            * The style below makes sure it takes up the rest of the available space.
-            * The key is to have an ID here that matches the "containerId" in the script.
+            * We are using the "webchat" ID here to match the user's provided code.
+            * We also added an inline style to give it a definite starting size.
             -->
-            <div id="botpress-webchat-container" class="flex-grow"></div>
+            <div id="webchat" style="height: 100%;" class="flex-grow"></div>
         </div>
     </div>
 
     <!-- The Botpress embed script that initializes and renders the chatbot -->
-    <!-- This version of the script is known to be very reliable for full-page embeds -->
-    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script>
-        // Use a more stable initialization method.
-        window.botpressWebChat.init({
+        // We'll use the user's provided script to initialize the bot.
+        window.botpress.init({
             "botId": "b732a6f3-8226-49f3-b113-a7a8e0082840",
-            "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
-            "messagingUrl": "https://messaging.botpress.cloud",
+            "configuration": {
+                "version": "v1",
+                "composerPlaceholder": "Hello, I believe that...",
+                "botName": "John",
+                "botDescription": "Greetings. I'm John. I'm here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore how you get to your beliefs and deepen our understanding. What would you like to discuss?",
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#3276EA",
+                "variant": "solid",
+                "headerVariant": "glass",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 4,
+                "feedbackEnabled": true,
+                "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)"
+            },
             "clientId": "f3d2eea1-0696-4cbe-a4d8-d83effa90856",
-            "botName": "John",
-            "botDescription": "Greetings. I'm John. I'm here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore how you get to your beliefs and deepen our understanding. What would you like to discuss?",
-            "containerId": "botpress-webchat-container", // Connect to the div here
-            "composerPlaceholder": "Hello, I believe that...",
-            "branding": {
-                "poweredByBotpress": false
-            }
+            "selector": "#webchat"
         });
     </script>
 
