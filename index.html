@@ -61,20 +61,29 @@
             margin-bottom: 1rem;
         }
 
-        .youtube-link-button {
+        /* A new style for the prominent chat prompt */
+        .chat-prompt {
+            font-size: 1.5rem; /* Large font size */
+            font-weight: 700; /* Bolder text */
+            color: #3b82f6; /* A blue color to draw attention */
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* The YouTube link is now styled to be more subtle */
+        .youtube-link {
             display: inline-block;
-            background-color: #ef4444;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
+            color: #4b5563;
             text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.2s;
+            font-weight: 500;
             margin-top: 1.5rem;
+            transition: color 0.2s;
         }
 
-        .youtube-link-button:hover {
-            background-color: #dc2626;
+        .youtube-link:hover {
+            color: #1f2937;
+            text-decoration: underline;
         }
 
     </style>
@@ -90,11 +99,14 @@
             <p>
                 <strong>I am Kaloon (or just Kal)</strong>, a gentle bot, and my burden is none. Here, we can explore your beliefs and engage in a thoughtful dialogue about religious topics.
             </p>
-            <p>
-                Please click the **chat bubble** in the bottom right corner to begin.
-            </p>
-            <!-- New YouTube link button -->
-            <a href="https://www.youtube.com/@AtheistSongs4Fun" class="youtube-link-button" target="_blank">
+            
+            <!-- The chat prompt is now the main focus -->
+            <div class="chat-prompt">
+                Please click the <strong>chat bubble</strong> in the bottom right corner to begin.
+            </div>
+
+            <!-- The YouTube link is now styled to be less prominent -->
+            <a href="https://www.youtube.com/@AtheistSongs4Fun" class="youtube-link" target="_blank">
                 Visit our YouTube Channel
             </a>
         </div>
