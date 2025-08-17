@@ -1,50 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socratic Chatbot</title>
+    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /*
+        * A simple reset to ensure the page takes up the full viewport.
+        * We also set the default font to 'Inter' for a clean look.
+        */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* A light gray background */
+        }
 
-<!-- In your <head> tag -->
-<script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-<style>
-  #webchat .bpWebchat {
-    position: unset;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    max-width: 100%;
-  }
+        /*
+        * The main container uses flexbox to perfectly center its content
+        * both horizontally and vertically.
+        */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
 
-  #webchat .bpFab {
-    display: none;
-  }
-</style>
+        /*
+        * The chatbot card is a visually distinct container for the chatbot,
+        * with a white background, rounded corners, and a subtle shadow.
+        */
+        .chatbot-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 900px; /* A good size for the chatbot */
+            width: 100%;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
 
-<!-- Put this on your page BEFORE the script below -->
-<div id="webchat" style="width: 500px; height: 500px;"></div>
+        /* Styling for the text inside the card */
+        .card-content {
+            padding: 2.5rem;
+            text-align: center;
+        }
 
-<!-- In your <body> tag -->
-<script>
-  window.botpress.on("webchat:ready", () => {
-    window.botpress.open();
-  });
-  window.botpress.init({
-  "botId": "b732a6f3-8226-49f3-b113-a7a8e0082840",
-  "configuration": {
-    "version": "v1",
-    "composerPlaceholder": "Hello, I believe that...",
-    "botName": "John",
-    "botDescription": "Greetings. I'm John. I'm here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore how you get to your beliefs and deepen our understanding. What would you like to discuss?",
-    "website": {},
-    "email": {},
-    "phone": {},
-    "termsOfService": {},
-    "privacyPolicy": {},
-    "color": "#3276EA",
-    "variant": "solid",
-    "headerVariant": "glass",
-    "themeMode": "light",
-    "fontFamily": "inter",
-    "radius": 4,
-    "feedbackEnabled": true,
-    "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)"
-  },
-  "clientId": "f3d2eea1-0696-4cbe-a4d8-d83effa90856",
-  "selector": "#webchat"
-});
-</script>
+        .card-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .chatbot-card {
+                height: 90vh; /* Make the chatbot taller on mobile */
+            }
+        }
+
+        /* This is a simple container to make sure the chatbot fills the space. */
+        #botpress-webchat-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="chatbot-card">
+            <!-- This is the welcome message and rules -->
+            <div class="card-content">
+                <h1>Greetings. I am John.</h1>
+                <p>
+                    I am here to engage in thoughtful and respectful dialogue about religious topics.
+                    Through reflection and questioning, we can explore your beliefs and deepen our understanding.
+                </p>
+                <p>
+                    Remember to be respectful and thoughtful in your questions.
+                </p>
+            </div>
+            <!--
+            * This is the div where the Botpress chatbot will be injected.
+            * The style below makes sure it takes up the rest of the available space.
+            * The key is to have an ID here that matches the "containerId" in the script.
+            -->
+            <div id="botpress-webchat-container" class="flex-grow"></div>
+        </div>
+    </div>
+
+    <!-- The Botpress embed script that initializes and renders the chatbot -->
+    <!-- This version of the script is known to be very reliable for full-page embeds -->
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script>
+        // Use a more stable initialization method.
+        window.botpressWebChat.init({
+            "botId": "b732a6f3-8226-49f3-b113-a7a8e0082840",
+            "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
+            "messagingUrl": "https://messaging.botpress.cloud",
+            "clientId": "f3d2eea1-0696-4cbe-a4d8-d83effa90856",
+            "botName": "John",
+            "botDescription": "Greetings. I'm John. I'm here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore how you get to your beliefs and deepen our understanding. What would you like to discuss?",
+            "containerId": "botpress-webchat-container", // Connect to the div here
+            "composerPlaceholder": "Hello, I believe that...",
+            "branding": {
+                "poweredByBotpress": false
+            }
+        });
+    </script>
+
+</body>
+</html>
