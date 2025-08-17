@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socratic Chatbot</title>
-    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /*
@@ -17,61 +17,24 @@
             padding: 0;
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6; /* A light gray background */
-        }
-
-        /*
-        * The main container uses flexbox to perfectly center its content
-        * both horizontally and vertically.
-        */
-        .main-container {
-            display: flex;
+            display: flex; /* Use flexbox to center content */
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            box-sizing: border-box;
         }
 
-        /*
-        * The chatbot card is a visually distinct container for the chatbot,
-        * with a white background, rounded corners, and a subtle shadow.
-        */
-        .chatbot-card {
-            background-color: #ffffff;
+        /* The main container for the chatbot, ensuring it fills the page */
+        .full-page-container {
+            width: 100%;
+            height: 100%;
+            max-width: 900px;
+            max-height: 700px;
             border-radius: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 900px; /* A good size for the chatbot */
-            width: 100%;
-            height: 700px;
-            display: flex;
-            flex-direction: column;
+            overflow: hidden; /* Ensures the chat bot content stays within bounds */
         }
 
-        /* Styling for the text inside the card */
-        .card-content {
-            padding: 2.5rem;
-            text-align: center;
-        }
-
-        .card-content h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-content p {
-            font-size: 1rem;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        /*
-        * This is the user's provided CSS to make the chatbot a full embed.
-        * We are adding `height: 100% !important;` to ensure the container
-        * has a definite height for the bot to render into.
-        */
+        /* Force the Botpress embed to fill the container, overriding any defaults */
         #webchat .bpWebchat {
             position: unset !important;
             width: 100% !important;
@@ -80,59 +43,31 @@
             max-width: 100% !important;
         }
 
+        /* Hide the bubble icon as we want a full embed */
         #webchat .bpFab {
             display: none !important;
-        }
-
-        /* Ensure the container for the bot has a definite height */
-        #webchat-container {
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .chatbot-card {
-                height: 90vh; /* Make the chatbot taller on mobile */
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="chatbot-card">
-            <!-- This is the welcome message and rules -->
-            <div class="card-content">
-                <h1>Greetings. I am John.</h1>
-                <p>
-                    I am here to engage in thoughtful and respectful dialogue about religious topics.
-                    Through reflection and questioning, we can explore your beliefs and deepen our understanding.
-                </p>
-                <p>
-                    Remember to be respectful and thoughtful in your questions.
-                </p>
-            </div>
-            <!--
-            * This is the div where the Botpress chatbot will be injected.
-            * We are using the "webchat" ID here to match the user's provided code.
-            * We also added an inline style to give it a definite starting size.
-            -->
-            <div id="webchat" style="height: 100%;" class="flex-grow"></div>
-        </div>
-    </div>
+    <!--
+    * This is the main container for the chatbot. The Botpress script will
+    * find this element using the "selector" property and embed the bot here.
+    -->
+    <div id="webchat" class="full-page-container"></div>
 
     <!-- The Botpress embed script that initializes and renders the chatbot -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script>
-        // We'll use the user's provided script to initialize the bot.
+        // Use the Botpress v3.2 initialization method with a "selector"
         window.botpress.init({
             "botId": "b732a6f3-8226-49f3-b113-a7a8e0082840",
             "configuration": {
                 "version": "v1",
                 "composerPlaceholder": "Hello, I believe that...",
                 "botName": "John",
-                "botDescription": "Greetings. I'm John. I'm here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore how you get to your beliefs and deepen our understanding. What would you like to discuss?",
+                "botDescription": "Greetings. I am John. I am here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore your beliefs and deepen our understanding. Remember to be respectful and thoughtful in your questions.",
                 "website": {},
                 "email": {},
                 "phone": {},
@@ -148,7 +83,7 @@
                 "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)"
             },
             "clientId": "f3d2eea1-0696-4cbe-a4d8-d83effa90856",
-            "selector": "#webchat"
+            "selector": "#webchat" // This tells the script where to render the bot
         });
     </script>
 
