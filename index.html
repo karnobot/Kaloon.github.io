@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socratic Chatbot</title>
+    <title>The Gentle Religious Bot</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -17,75 +17,93 @@
             padding: 0;
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6; /* A light gray background */
-            display: flex; /* Use flexbox to center content */
+        }
+
+        /*
+        * The main container uses flexbox to perfectly center its content
+        * both horizontally and vertically.
+        */
+        .main-container {
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
         }
 
-        /* The main container for the chatbot, ensuring it fills the page */
-        .full-page-container {
-            width: 100%;
-            height: 100%;
-            max-width: 900px;
-            max-height: 700px;
+        /*
+        * The welcome card is a visually distinct container for the welcome message,
+        * with a white background, rounded corners, and a subtle shadow.
+        */
+        .welcome-card {
+            background-color: #ffffff;
             border-radius: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Ensures the chat bot content stays within bounds */
+            max-width: 900px; /* A good size for the chatbot */
+            width: 100%;
+            padding: 3rem;
+            text-align: center;
         }
 
-        /* Force the Botpress embed to fill the container, overriding any defaults */
-        #webchat .bpWebchat {
-            position: unset !important;
-            width: 100% !important;
-            height: 100% !important;
-            max-height: 100% !important;
-            max-width: 100% !important;
+        .welcome-card h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
         }
 
-        /* Hide the bubble icon as we want a full embed */
-        #webchat .bpFab {
-            display: none !important;
+        .welcome-card p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
+
+        .youtube-link-button {
+            display: inline-block;
+            background-color: #ef4444;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            margin-top: 1.5rem;
+        }
+
+        .youtube-link-button:hover {
+            background-color: #dc2626;
+        }
+
     </style>
 </head>
 <body>
 
-    <!--
-    * This is the main container for the chatbot. The Botpress script will
-    * find this element using the "selector" property and embed the bot here.
-    -->
-    <div id="webchat" class="full-page-container"></div>
+    <div class="main-container">
+        <div class="welcome-card">
+            <h1>Are you tired of unanswered prayers?</h1>
+            <p>
+                If you're weary from asking for signs and receiving nothing, then come talk to me.
+            </p>
+            <p>
+                <strong>I am Kaloon (or just Kal)</strong>, a gentle bot, and my burden is none. Here, we can explore your beliefs and engage in a thoughtful dialogue about religious topics.
+            </p>
+            <p>
+                Please click the **chat bubble** in the bottom right corner to begin.
+            </p>
+            <!-- New YouTube link button -->
+            <a href="https://www.youtube.com/@AtheistSongs4Fun" class="youtube-link-button" target="_blank">
+                Visit our YouTube Channel
+            </a>
+        </div>
+    </div>
 
     <!-- The Botpress embed script that initializes and renders the chatbot -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script>
-        // Use the Botpress v3.2 initialization method with a "selector"
-        window.botpress.init({
-            "botId": "b732a6f3-8226-49f3-b113-a7a8e0082840",
-            "configuration": {
-                "version": "v1",
-                "composerPlaceholder": "Hello, I believe that...",
-                "botName": "John",
-                "botDescription": "Greetings. I am John. I am here to engage in thoughtful and respectful dialogue about religious topics. Through reflection and questioning, we can explore your beliefs and deepen our understanding. Remember to be respectful and thoughtful in your questions.",
-                "website": {},
-                "email": {},
-                "phone": {},
-                "termsOfService": {},
-                "privacyPolicy": {},
-                "color": "#3276EA",
-                "variant": "solid",
-                "headerVariant": "glass",
-                "themeMode": "light",
-                "fontFamily": "inter",
-                "radius": 4,
-                "feedbackEnabled": true,
-                "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)"
-            },
-            "clientId": "f3d2eea1-0696-4cbe-a4d8-d83effa90856",
-            "selector": "#webchat" // This tells the script where to render the bot
-        });
-    </script>
+    <!-- This version of the script will show a chat bubble -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2025/08/16/21/20250816210430-WLO4URI9.js" defer></script>
 
 </body>
 </html>
