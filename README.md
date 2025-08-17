@@ -1,2 +1,2 @@
-# John-Obot
-Socratic John AI Bot
+# Kaloon
+The Gentle Religious Ai AI Bot
