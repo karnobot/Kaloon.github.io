@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Religious Belief with Kaloon</title>
+    <title id="page-title">Chat Religious Belief with Kaloon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body {
             font-family: 'Inter', sans-serif;
+        }
+        /* Make the iframe responsive and full-size within its container */
+        iframe {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -27,24 +32,18 @@
             </select>
         </div>
 
-        <!-- Chat messages container -->
-        <div id="chat-container" class="flex-1 overflow-y-auto p-4 border rounded-xl mb-4 bg-gray-50">
-            <!-- Messages will be appended here by JavaScript -->
-        </div>
-
-        <!-- Input and Send Button -->
-        <div class="flex gap-2">
-            <input type="text" id="chat-input" placeholder="Type your message..."
-                   class="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button id="send-button"
-                    class="p-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                Send
-            </button>
+        <!-- Botpress Chat Iframe Container -->
+        <!-- The iframe will fill this container and is responsive -->
+        <div id="chat-container" class="flex-1 overflow-hidden p-0 border rounded-xl mb-4 bg-gray-50">
+            <iframe src="https://cdn.botpress.cloud/webchat/v3.2/shareable.html?configUrl=https://files.bpcontent.cloud/2025/08/16/21/20250816210430-XP62U6XA.json"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
         </div>
         
         <!-- Back button -->
         <div class="mt-4">
-            <a href="index.html" class="inline-block px-4 py-2 bg-gray-200 text-gray-800 rounded-full shadow-md hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+            <a href="index.html" id="go-back-link" class="inline-block px-4 py-2 bg-gray-200 text-gray-800 rounded-full shadow-md hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                 &larr; Go Back
             </a>
         </div>
@@ -55,32 +54,27 @@
         const translations = {
             'en': {
                 'chat-title': 'Chat Religious Belief with Kaloon',
-                'chat-input': 'Type your message...',
-                'send-button': 'Send',
+                'page-title': 'Chat Religious Belief with Kaloon',
                 'go-back': 'Go Back'
             },
             'es': {
                 'chat-title': 'Chatea Creencia Religiosa con Kaloon',
-                'chat-input': 'Escribe tu mensaje...',
-                'send-button': 'Enviar',
+                'page-title': 'Chatea Creencia Religiosa con Kaloon',
                 'go-back': 'Volver'
             },
             'fr': {
                 'chat-title': 'Discuter Croyance Religieuse avec Kaloon',
-                'chat-input': 'Tapez votre message...',
-                'send-button': 'Envoyer',
+                'page-title': 'Discuter Croyance Religieuse avec Kaloon',
                 'go-back': 'Retourner'
             },
             'id': {
                 'chat-title': 'Mengobrol Kepercayaan Agama dengan Kaloon',
-                'chat-input': 'Ketik pesanmu...',
-                'send-button': 'Kirim',
+                'page-title': 'Mengobrol Kepercayaan Agama dengan Kaloon',
                 'go-back': 'Kembali'
             },
             'zh': {
                 'chat-title': '与Kaloon聊天关于宗教信仰',
-                'chat-input': '输入你的信息...',
-                'send-button': '发送',
+                'page-title': '与Kaloon聊天关于宗教信仰',
                 'go-back': '返回'
             }
         };
@@ -88,11 +82,9 @@
         function setLanguage(lang) {
             const elements = translations[lang];
             document.getElementById('chat-title').textContent = elements['chat-title'];
-            document.getElementById('chat-input').placeholder = elements['chat-input'];
-            document.getElementById('send-button').textContent = elements['send-button'];
+            document.getElementById('page-title').textContent = elements['page-title'];
+            document.getElementById('go-back-link').textContent = `← ${elements['go-back']}`;
             document.getElementById('language-select').value = lang;
-            
-            // Note: The "Go Back" link is not translated in this version as it's a static text link.
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -103,16 +95,6 @@
 
             document.getElementById('language-select').addEventListener('change', (event) => {
                 setLanguage(event.target.value);
-            });
-
-            // Placeholder for chat functionality (not implemented)
-            document.getElementById('send-button').addEventListener('click', () => {
-                const message = document.getElementById('chat-input').value;
-                if (message.trim() !== "") {
-                    // This is where you would add your chatbot logic
-                    console.log("Message sent:", message);
-                    document.getElementById('chat-input').value = "";
-                }
             });
         });
     </script>
