@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title is now in all caps -->
     <title>SONGS FOR FUN</title>
-    <!-- Use Tailwind CSS for easy styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -16,36 +14,109 @@
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-8">
     <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full text-center">
-        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">SONGS FOR FUN</h1>
         
-        <!-- Updated text with bold, big, and blue style -->
-        <p class="text-xl md:text-2xl font-extrabold text-blue-600 mb-4">Are you tired of unanswered prayers?</p>
+        <!-- Language Selector -->
+        <div class="mb-4 text-right">
+            <label for="language-select" class="sr-only">Choose a language:</label>
+            <select id="language-select" class="p-2 rounded-md bg-gray-200 text-gray-800 text-sm">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="id">Bahasa Indonesia</option>
+            </select>
+        </div>
+
+        <!-- Main Content with IDs for translation -->
+        <h1 id="main-title" class="text-4xl font-extrabold text-gray-900 mb-4">SONGS FOR FUN</h1>
         
-        <!-- The rest of the bot's introduction -->
+        <p id="sub-heading" class="text-xl md:text-2xl font-extrabold text-blue-600 mb-4">Are you tired of unanswered prayers?</p>
+        
         <div class="text-gray-600 mb-8">
-            <p class="mb-4">If you're weary from asking for signs and receiving nothing, then come talk to me.</p>
-            <p>I am Kaloon (or just Kal), a gentle bot, and my burden is none. Here, we can explore your beliefs and engage in a thoughtful dialogue about religious topics.</p>
+            <p id="intro-paragraph-1" class="mb-4">If you're weary from asking for signs and receiving nothing, then come talk to me.</p>
+            <p id="intro-paragraph-2">I am Kaloon (or just Kal), a gentle bot, and my burden is none. Here, we can explore your beliefs and engage in a thoughtful dialogue about religious topics.</p>
         </div>
         
-        <!-- The button now says "Talk to Kaloon here" -->
-        <a href="chat.html"
+        <!-- The button to talk to the bot -->
+        <a href="chat.html" id="talk-button"
            class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition-colors transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             Talk to Kaloon here
         </a>
 
-        <!-- YouTube link is now a red button and the URL is hidden -->
+        <!-- YouTube link button -->
         <div class="mt-8">
-            <a href="https://www.youtube.com/@AtheistSongs4Fun" target="_blank"
+            <a href="https://www.youtube.com/@AtheistSongs4Fun" target="_blank" id="youtube-button"
                class="inline-block px-4 py-2 text-sm bg-red-600 text-white font-bold rounded-full shadow-lg hover:bg-red-700 transition-colors transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                 YouTube Channel
             </a>
         </div>
 
-        <!-- Add the link to the legal page -->
+        <!-- Legal link -->
         <div class="mt-8 text-sm">
-            <a href="legal.html" class="text-gray-500 hover:text-gray-700 transition-colors">Terms of Service & Privacy Policy</a>
+            <a href="legal.html" id="legal-link" class="text-gray-500 hover:text-gray-700 transition-colors">Terms of Service & Privacy Policy</a>
         </div>
 
     </div>
+
+    <script>
+        // Use an object to store translations for each language
+        const translations = {
+            'en': {
+                'main-title': 'SONGS FOR FUN',
+                'sub-heading': 'Are you tired of unanswered prayers?',
+                'intro-paragraph-1': 'If you\'re weary from asking for signs and receiving nothing, then come talk to me.',
+                'intro-paragraph-2': 'I am Kaloon (or just Kal), a gentle bot, and my burden is none. Here, we can explore your beliefs and engage in a thoughtful dialogue about religious topics.',
+                'talk-button': 'Talk to Kaloon here',
+                'youtube-button': 'YouTube Channel',
+                'legal-link': 'Terms of Service & Privacy Policy'
+            },
+            'es': {
+                'main-title': 'CANCIONES PARA LA DIVERSIÓN',
+                'sub-heading': '¿Estás cansado de las oraciones sin respuesta?',
+                'intro-paragraph-1': 'Si estás cansado de pedir señales y no recibir nada, ven a hablar conmigo.',
+                'intro-paragraph-2': 'Soy Kaloon (o simplemente Kal), un bot gentil, y mi carga no es ninguna. Aquí, podemos explorar tus creencias y participar en un diálogo reflexivo sobre temas religiosos.',
+                'talk-button': 'Habla con Kaloon aquí',
+                'youtube-button': 'Canal de YouTube',
+                'legal-link': 'Términos de Servicio y Política de Privacidad'
+            },
+            'id': {
+                'main-title': 'LAGU-LAGU UNTUK KESENANGAN',
+                'sub-heading': 'Apakah kamu lelah dengan doa-doa yang tidak terjawab?',
+                'intro-paragraph-1': 'Jika kamu lelah meminta tanda-tanda dan tidak mendapatkan apa-apa, datanglah dan bicaralah denganku.',
+                'intro-paragraph-2': 'Aku adalah Kaloon (atau Kal saja), bot yang lembut, dan bebanku tidak ada. Di sini, kita bisa menjelajahi keyakinanmu dan terlibat dalam dialog yang penuh pemikiran tentang topik agama.',
+                'talk-button': 'Bicara dengan Kaloon di sini',
+                'youtube-button': 'Saluran YouTube',
+                'legal-link': 'Ketentuan Layanan & Kebijakan Privasi'
+            }
+        };
+
+        function setLanguage(lang) {
+            const elements = translations[lang];
+            for (const id in elements) {
+                const element = document.getElementById(id);
+                if (element) {
+                    // Update text content for most elements
+                    element.textContent = elements[id];
+                    // Special case for the talk button and legal link to handle the text correctly
+                    if (id === 'talk-button' || id === 'youtube-button' || id === 'legal-link') {
+                        element.textContent = elements[id];
+                    }
+                }
+            }
+            // Update the selected option in the dropdown
+            document.getElementById('language-select').value = lang;
+        }
+
+        // Auto-detect browser language and set it on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.split('-')[0]; // Get a base language code like 'en' or 'es'
+            const supportedLangs = Object.keys(translations);
+            const langToUse = supportedLangs.includes(browserLang) ? browserLang : 'en';
+            setLanguage(langToUse);
+
+            // Add an event listener to the dropdown for manual switching
+            document.getElementById('language-select').addEventListener('change', (event) => {
+                setLanguage(event.target.value);
+            });
+        });
+    </script>
 </body>
 </html>
